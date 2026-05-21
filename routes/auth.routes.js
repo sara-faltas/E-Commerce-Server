@@ -3,6 +3,8 @@ const User = require("../models/User.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken") 
 const { verifyToken } = require("../middlewares/auth.middlewares")
+const { verifyAdmin } = require("../middlewares/auth.middlewares")
+
 
 // POST "/api/auth/signup" => creates the user document
 router.post("/signup", async (req, res, next) => {
@@ -94,6 +96,12 @@ router.post("/login", async (req, res, next) => {
 
 // GET "/api/auth/verify" => Only for frontend purposes. So the frontend know who the owner of the token is.
 router.get("/verify", verifyToken, (req, res) => {
+  res.status(200).json({ payload: req.payload })
+})
+
+
+// GET "/api/auth/verifyAdmin" => Only for frontend purposes. So the frontend know who the owner of the token is.
+router.get("/verifyAdmin", verifyAdmin , (req, res) => {
   res.status(200).json({ payload: req.payload })
 })
 

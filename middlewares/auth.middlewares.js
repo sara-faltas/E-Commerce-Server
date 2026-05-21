@@ -19,6 +19,9 @@ function verifyToken(req, res, next) {
 }
 
 function verifyAdmin(req, res, next) {
+   const authToken = req.headers.authorization.split(" ")[1];
+   const payload = jwt.verify(authToken, process.env.TOKEN_SECRET);
+   req.payload = payload;
   if (req.payload.role === "admin") {
     next();
   } else {

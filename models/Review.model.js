@@ -1,5 +1,6 @@
 const { ObjectId } = require("bson");
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose")
 
 const reviewSchema = new Schema(
   {
@@ -8,8 +9,12 @@ const reviewSchema = new Schema(
       required: [true, 'Review is required.']
     },
     product:{
-      type:ObjectId,
+      type:mongoose.Schema.Types.ObjectId,
       ref:"Product"
+    },
+     user:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User"
     }
   },
   {

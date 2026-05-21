@@ -22,9 +22,8 @@ const productSchema = new Schema(
     },
 
        size: {
-      type: Number,
-      required: [true, 'size is required.'],
-      enum:["20","40","60"]
+      type: String,
+      required: [true, 'size is required.']
     },
      image: {
       type: String
