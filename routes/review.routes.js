@@ -4,7 +4,7 @@ const {verifyToken, verifyAdmin } = require ("../middlewares/auth.middlewares")
 
 
 // POST "/api/user/review" => creates the review comment
-router.post("/review", verifyToken,verifyAdmin, async (req, res, next) => {
+router.post("/review", verifyToken, async (req, res, next) => {
   console.log(req.body);
   const { reviewText, product,user } = req.body;
 
@@ -29,7 +29,7 @@ router.post("/review", verifyToken,verifyAdmin, async (req, res, next) => {
 
 
 // Patch "/api/user/review/reviewId" => updates the review
-router.patch("/review/:reviewId",verifyToken,verifyAdmin, async (req, res, next) => {
+router.patch("/review/:reviewId",verifyToken, async (req, res, next) => {
  const { reviewText, product,user } = req.body;
   try {
    const updatedreview = {
@@ -48,7 +48,7 @@ router.patch("/review/:reviewId",verifyToken,verifyAdmin, async (req, res, next)
 });
 
 // delete "/api/user/review/reviewId" => delete the review
-router.delete("/review/:reviewId", verifyToken,verifyAdmin, async (req, res, next)  => {
+router.delete("/review/:reviewId", verifyToken, async (req, res, next)  => {
   try {
     const response = await Review.findByIdAndDelete(req.params.reviewId);
     res.sendStatus(200);

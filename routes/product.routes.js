@@ -5,7 +5,7 @@ const {verifyToken, verifyAdmin } = require ("../middlewares/auth.middlewares")
 
 
 // POST "/api/admin/product" => creates the product
-router.post("/product", verifyAdmin, async (req, res, next) => {
+router.post("/product", verifyToken,verifyAdmin, async (req, res, next) => {
 
 
   console.log(req.body)
@@ -40,7 +40,7 @@ router.post("/product", verifyAdmin, async (req, res, next) => {
 })
 
 // Patch "/api/admin/product/productId" => updates the product
-router.patch("/product/:productId",verifyAdmin, async (req, res, next) => {
+router.patch("/product/:productId",verifyToken,verifyAdmin, async (req, res, next) => {
   try {
 
  const {   title,  description,  price,   category, size,image,  stock } = req.body
@@ -67,7 +67,7 @@ router.patch("/product/:productId",verifyAdmin, async (req, res, next) => {
 });
 
 // delete "/api/admin/product/productId" => delete the product
-router.delete("/product/:productId", verifyAdmin, async (req, res, next)  => {
+router.delete("/product/:productId", verifyToken,verifyAdmin, async (req, res, next)  => {
   try {
     const response = await Product.findByIdAndDelete(req.params.productId);
     res.sendStatus(200);
