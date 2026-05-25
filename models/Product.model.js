@@ -5,38 +5,34 @@ const productSchema = new Schema(
  
     title: {
       type: String,
-      required: [true, 'title is required.'],
-      lowercase: true
+      required: [true, 'title is required.']
     },
     description: {
       type: String,
     },
       price: {
       type: Number,
-      required: [true, 'Price is required.'],
-      trim:true
+      required: [true, 'Price is required.']
     },
        category: {
-      type: String,
-      enum:["Handmade","Backpack","Side Bag"]
+      type: String
     },
 
        size: {
-      type: String,
-      required: [true, 'size is required.']
-    },
-     image: {
       type: String
     },
      stock: {
       type: Number
     },
-    
+    image: String,
+    edition: {
+      type:String,
+      default:"normal"},
   
+    // this second object adds extra properties: `createdAt` and `updatedAt`    
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
-    timestamps: true
+    timestamps: true,
   }
 );
 

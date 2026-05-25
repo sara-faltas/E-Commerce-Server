@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, default: mongoose } = require("mongoose");
 
 const userSchema = new Schema(
   {
@@ -25,6 +25,15 @@ const userSchema = new Schema(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+    favorite:{
+      type: [mongoose.Schema.Types.ObjectId],
+      ref:"Product",
+      isFav: false
+    },
+    cart:{
+      type:[mongoose.Schema.Types.ObjectId],
+      ref:"Product"
     },
   },
   {

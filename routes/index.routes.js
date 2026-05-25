@@ -5,10 +5,16 @@ const authRoutes = require("./auth.routes")
 router.use("/auth", authRoutes)
 
 const loggedUserRoutes = require("./review.routes")
-router.use("/user", loggedUserRoutes)
+router.use("/review", loggedUserRoutes)
 
 const adminRoutes = require("./product.routes")
-router.use("/admin", adminRoutes)
+router.use("/product", adminRoutes)
+
+const favoriteRoutes = require("./favorite.routes")
+router.use("/favorite", favoriteRoutes)
+
+const cartRoutes = require("./cart.routes")
+router.use("/cart", cartRoutes)
 
 
 

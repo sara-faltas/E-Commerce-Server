@@ -4,16 +4,16 @@ const Product = require("../models/Product.model")
 const {verifyToken, verifyAdmin } = require ("../middlewares/auth.middlewares")
 
 
-// POST "/api/admin/product" => creates the product
-router.post("/product", verifyToken,verifyAdmin, async (req, res, next) => {
+// POST "/api/product/create" => creates the product
+router.post("/create", verifyToken,verifyAdmin, async (req, res, next) => {
 
 
   console.log(req.body)
-  const {   title,  description,  price,   category, size,image,  stock } = req.body
+  const {   title,  description,  price,   category, size,image,  stock ,edition} = req.body
 
   // are mandatory
   if (!title || !price ) {
-    res.status(400).json({errorMessage: "You need to enter your review"})
+    res.status(400).json({errorMessage: "You need to enter your title and price"})
     return // this means, stop executing the route
   }
   
@@ -27,7 +27,8 @@ router.post("/product", verifyToken,verifyAdmin, async (req, res, next) => {
        category: category,
        size:size,
      image:image,
-     stock: stock
+     stock: stock,
+     edition:edition
   
     }
 
@@ -39,11 +40,11 @@ router.post("/product", verifyToken,verifyAdmin, async (req, res, next) => {
   }
 })
 
-// Patch "/api/admin/product/productId" => updates the product
-router.patch("/product/:productId",verifyToken,verifyAdmin, async (req, res, next) => {
+// Patch "/api/product/update/:productId" => updates the product
+router.patch("/update/:productId",verifyToken,verifyAdmin, async (req, res, next) => {
   try {
 
- const {   title,  description,  price,   category, size,image,  stock } = req.body
+ const {   title,  description,  price,   category, size,image,  stock,edition } = req.body
    const updatedProduct = {
     title: title,
     description: description,
@@ -51,7 +52,8 @@ router.patch("/product/:productId",verifyToken,verifyAdmin, async (req, res, nex
        category: category,
        size:size,
      image:image,
-     stock: stock
+     stock: stock,
+     edition:edition
   
     }
     const response = await Product.findByIdAndUpdate(
@@ -66,8 +68,8 @@ router.patch("/product/:productId",verifyToken,verifyAdmin, async (req, res, nex
   }
 });
 
-// delete "/api/admin/product/productId" => delete the product
-router.delete("/product/:productId", verifyToken,verifyAdmin, async (req, res, next)  => {
+// delete "/api/product/delete/:productId" => delete the product
+router.delete("/delete/:productId", verifyToken,verifyAdmin, async (req, res, next)  => {
   try {
     const response = await Product.findByIdAndDelete(req.params.productId);
     res.sendStatus(200);
@@ -77,8 +79,8 @@ router.delete("/product/:productId", verifyToken,verifyAdmin, async (req, res, n
   }
 });
 
-// GET "/api/admin/product" => get the product list
-router.get("/products", async (req, res, next) => {
+// GET "/api/product" => get the product list
+router.get("/", async (req, res, next) => {
 
   try {
     const response = await Product.find();
@@ -89,8 +91,8 @@ router.get("/products", async (req, res, next) => {
   }
 });
 
-// GET "/api/admin/product/productId" => get the product details
-router.get("/product/:productId", async (req, res, next) => {
+// GET "/api/product/productId" => get the product details
+router.get("/:productId", async (req, res, next) => {
   try {
     const response = await Product.findById(req.params.productId);
     console.log("Retrieved products detail ->", response);
