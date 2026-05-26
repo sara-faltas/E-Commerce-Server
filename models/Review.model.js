@@ -8,6 +8,7 @@ const reviewSchema = new Schema(
       type: String,
       required: [true, 'Review is required.']
     },
+    rating: Number,
     product:{
       type:mongoose.Schema.Types.ObjectId,
       ref:"Product"

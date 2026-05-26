@@ -8,7 +8,6 @@ const { verifyAdmin } = require("../middlewares/auth.middlewares")
 
 // POST "/api/auth/signup" => creates the user document
 router.post("/signup", async (req, res, next) => {
-  console.log(req.body)
   
   const { email, firstName,lastName, password } = req.body
   if (!email || !password || !firstName || !lastName) {
@@ -49,7 +48,6 @@ router.post("/signup", async (req, res, next) => {
 
 // POST "/api/auth/login" => receiving credentials from the user, authenticating them and sending the token
 router.post("/login", async (req, res, next) => {
-  console.log(req.body)
   const { email, password } = req.body
     if (!email || !password) {
     res.status(400).json({ errorMessage: "Both email and password are mandatory" })
@@ -60,7 +58,6 @@ router.post("/login", async (req, res, next) => {
     
     // the email needs to be in the DB
     const foundUser = await User.findOne({ email: email }) 
-    console.log(foundUser)
     if (!foundUser) {
       res.status(400).json({errorMessage: "user not found with that email, please signup first"})
       return 

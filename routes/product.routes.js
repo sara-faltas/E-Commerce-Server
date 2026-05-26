@@ -62,7 +62,6 @@ router.patch("/update/:productId",verifyToken,verifyAdmin, async (req, res, next
       { new: true },
     );
     res.status(200).json(response);
-    console.log("product updated");
   } catch (error) {
     next(error)
   }
@@ -73,7 +72,6 @@ router.delete("/delete/:productId", verifyToken,verifyAdmin, async (req, res, ne
   try {
     const response = await Product.findByIdAndDelete(req.params.productId);
     res.sendStatus(200);
-    console.log("product deleted");
   } catch (error) {
     next(error)
   }
@@ -84,7 +82,6 @@ router.get("/", async (req, res, next) => {
 
   try {
     const response = await Product.find();
-    console.log("Retrieved products ->", response);
     res.status(200).json(response);
   } catch (error) {
     next(error)
@@ -95,7 +92,6 @@ router.get("/", async (req, res, next) => {
 router.get("/:productId", async (req, res, next) => {
   try {
     const response = await Product.findById(req.params.productId);
-    console.log("Retrieved products detail ->", response);
     res.status(200).json(response);
   } catch (error) {
     next(error)

@@ -5,8 +5,7 @@ const {verifyToken, verifyAdmin } = require ("../middlewares/auth.middlewares")
 
 // POST "/api/review/create" => creates the review comment
 router.post("/create", verifyToken, async (req, res, next) => {
-  console.log(req.body);
-  const { reviewText, product,user } = req.body;
+  const { reviewText, product,rating } = req.body;
 
   // review are mandatory
   if (!reviewText) {
@@ -17,8 +16,9 @@ router.post("/create", verifyToken, async (req, res, next) => {
   try {
     const newreviewText = {
       reviewText: reviewText,
+      rating:rating,
       product: product,
-      user:user
+      user:req.payload._id
     };
     const response = await Review.create(newreviewText);
     res.sendStatus(201);
@@ -27,13 +27,14 @@ router.post("/create", verifyToken, async (req, res, next) => {
   }
 });
 
-
+// to be added the verificatin of the owner
 // Patch "/api/review/update/:reviewId" => updates the review
 router.patch("/update/:reviewId",verifyToken, async (req, res, next) => {
- const { reviewText, product,user } = req.body;
+ const { reviewText,rating} = req.body;
   try {
    const updatedreview = {
-    reviewText: reviewText
+    reviewText: reviewText,
+    rating:rating,
     }
     const response = await Review.findByIdAndUpdate(
       req.params.reviewId,
@@ -41,7 +42,7 @@ router.patch("/update/:reviewId",verifyToken, async (req, res, next) => {
       { new: true },
     );
     res.status(200).json(response);
-    console.log("review updated");
+
   } catch (error) {
     next(error)
   }
@@ -52,7 +53,6 @@ router.delete("/delete/:reviewId", verifyToken, async (req, res, next)  => {
   try {
     const response = await Review.findByIdAndDelete(req.params.reviewId);
     res.sendStatus(200);
-    console.log("review deleted");
   } catch (error) {
     next(error)
   }
@@ -62,7 +62,6 @@ router.delete("/delete/:reviewId", verifyToken, async (req, res, next)  => {
 router.get("/", async (req, res, next) => {
   try {
     const response = await Review.find();
-    console.log("Retrieved review list ->", response);
     res.status(200).json(response);
   } catch (error) {
     next(error)
@@ -73,7 +72,16 @@ router.get("/", async (req, res, next) => {
 router.get("/:reviewId", async (req, res, next) => {
   try {
     const response = await Review.findById(req.params.reviewId).populate("product");
-    console.log("Retrieved review ->", response);
+    res.status(200).json(response);
+  } catch (error) {
+    next(error)
+  }
+});
+
+//GET "api/review/product/:productId/reviews"
+router.get("/product/:productId/reviews", async (req, res, next) => {
+  try {
+    const response = await Review.find({product: req.params.productId});
     res.status(200).json(response);
   } catch (error) {
     next(error)

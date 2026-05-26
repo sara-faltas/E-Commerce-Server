@@ -16,6 +16,15 @@ router.use("/favorite", favoriteRoutes)
 const cartRoutes = require("./cart.routes")
 router.use("/cart", cartRoutes)
 
+// in routes/index.routes.js
+
+// ...
+
+const uploadRoutes = require("./upload.routes");
+router.use("/upload", uploadRoutes);
+
+// ...
+
 
 
 module.exports = router;

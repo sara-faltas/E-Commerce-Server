@@ -11,7 +11,6 @@ router.get("/:userId", verifyToken, async (req, res, next) => {
       populate: {
         path: "product"
   }});
-    console.log("Retrieved product list ->", response);
     res.status(200).json(response);
   } catch (error) {
     next(error)
