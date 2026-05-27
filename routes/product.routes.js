@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { title } = require("node:process");
 const Product = require("../models/Product.model")
+const Review = require("../models/Review.model")
 const {verifyToken, verifyAdmin } = require ("../middlewares/auth.middlewares")
 
 
@@ -70,8 +71,11 @@ router.patch("/update/:productId",verifyToken,verifyAdmin, async (req, res, next
 // delete "/api/product/delete/:productId" => delete the product
 router.delete("/delete/:productId", verifyToken,verifyAdmin, async (req, res, next)  => {
   try {
-    const response = await Product.findByIdAndDelete(req.params.productId);
-    res.sendStatus(200);
+    await Review.deleteMany({product: req.params.productId,});
+    await Product.findByIdAndDelete(req.params.productId);
+    res.sendStatus(200).json({
+      message: "Product and related reviews deleted",
+    });
   } catch (error) {
     next(error)
   }
