@@ -10,7 +10,7 @@ router.post("/create", verifyToken,verifyAdmin, async (req, res, next) => {
 
 
   console.log(req.body)
-  const {   title,  description,  price,   category, size,image,  stock ,edition} = req.body
+  const {   title,  description,  price,   category, size,image,  stock ,edition,material} = req.body
 
   // are mandatory
   if (!title || !price ) {
@@ -29,7 +29,8 @@ router.post("/create", verifyToken,verifyAdmin, async (req, res, next) => {
        size:size,
      image:image,
      stock: stock,
-     edition:edition
+     edition:edition,
+     material:material
   
     }
 
@@ -45,7 +46,7 @@ router.post("/create", verifyToken,verifyAdmin, async (req, res, next) => {
 router.patch("/update/:productId",verifyToken,verifyAdmin, async (req, res, next) => {
   try {
 
- const {   title,  description,  price,   category, size,image,  stock,edition } = req.body
+ const {   title,  description,  price,   category, size,image,  stock,edition,material } = req.body
    const updatedProduct = {
     title: title,
     description: description,
@@ -54,7 +55,8 @@ router.patch("/update/:productId",verifyToken,verifyAdmin, async (req, res, next
        size:size,
      image:image,
      stock: stock,
-     edition:edition
+     edition:edition,
+     material:material
   
     }
     const response = await Product.findByIdAndUpdate(

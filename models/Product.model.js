@@ -21,6 +21,10 @@ const productSchema = new Schema(
        size: {
       type: String
     },
+    material: {
+      type: String,
+      default:"cotton"
+    },
      stock: {
       type: Number
     },

@@ -53,6 +53,7 @@ router.delete("/delete/:reviewId", verifyToken, async (req, res, next)  => {
   try {
     const response = await Review.findByIdAndDelete(req.params.reviewId);
     res.sendStatus(200);
+
   } catch (error) {
     next(error)
   }
@@ -80,8 +81,9 @@ router.get("/:reviewId", async (req, res, next) => {
 
 //GET "api/review/product/:productId/reviews"
 router.get("/product/:productId/reviews", async (req, res, next) => {
+ 
   try {
-    const response = await Review.find({product: req.params.productId});
+    const response = await Review.find({product: req.params.productId}).populate("user");
     res.status(200).json(response);
   } catch (error) {
     next(error)
