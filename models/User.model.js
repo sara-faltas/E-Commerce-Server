@@ -26,14 +26,15 @@ const userSchema = new Schema(
       enum: ["user", "admin"],
       default: "user",
     },
-    favorite:{
+    favorite: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+    cart: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref:"Product",
-      isFav: false
-    },
-    cart:{
-      type:[mongoose.Schema.Types.ObjectId],
-      ref:"Product"
+      ref: "Product",
     },
   },
   {

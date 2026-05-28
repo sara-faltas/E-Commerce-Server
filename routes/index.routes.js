@@ -16,6 +16,9 @@ router.use("/favorite", favoriteRoutes)
 const cartRoutes = require("./cart.routes")
 router.use("/cart", cartRoutes)
 
+const userRoutes = require("./user.routes")
+router.use("/user", userRoutes)
+
 // in routes/index.routes.js
 
 // ...
