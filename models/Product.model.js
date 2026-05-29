@@ -29,6 +29,10 @@ const productSchema = new Schema(
       type: Number
     },
     image: String,
+    color: {
+      type: String,
+      default:"white"
+    },
     edition: {
       type:String,
       default:"normal"},
