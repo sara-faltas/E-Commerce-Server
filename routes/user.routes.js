@@ -41,22 +41,6 @@ router.get("/all", verifyToken,verifyAdmin, async (req, res, next) => {
     }
 });
 
-// Update "/api/user/update" => get user by id
-router.patch("/update", verifyToken, async (req, res, next) => {
-    try {
-        const { firstName, lastName, email, password } = req.body
-         const updateduser = {
-         firstName: firstName,
-         lastName: lastName,
-         email: email,
-         password: password 
-        }
-        const response = await User.findByIdandUpdate(req.payload._id,updateduser ,{ new: true },);
-        res.status(200).json(response);
-    } catch (error) {
-        next(error)
-    }
-});
 
 
 
